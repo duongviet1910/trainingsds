@@ -1,0 +1,27 @@
+﻿@page "/listTeacher"
+
+<h3>ListTeacher</h3>
+
+
+<Table @ref="table" TItem="Teacher" DataSource="ListTeachers" Total="totalCount"
+    
+       @bind-PageIndex="pageNumber" @bind-PageSize="pageSize" OnChange="OnPaging">
+    @* <Column @bind-Field="context.STT"></Column> *@
+
+    <Column @bind-Field="context.Id" Title="STT"></Column>
+    <Column @bind-Field="context.Name" Title="Teacher Name"></Column>
+    <Column @bind-Field="context.Dob" Title="Birthday" Format="dd/MM/yyyy"></Column>
+
+
+    <ActionColumn Title="Action">
+        <Space Size=@("middle")>
+            <SpaceItem>
+                <Button OnClick="()=>ShowPopupTeacher(context)"><Icon Type="edit"></Icon></Button>
+            </SpaceItem>
+            
+        </Space>
+    </ActionColumn>
+
+
+</Table> 
+

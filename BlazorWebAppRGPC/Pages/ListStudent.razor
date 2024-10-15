@@ -1,0 +1,95 @@
+﻿@page "/listStudent"
+
+<h3>ListStudent</h3>
+<Button OnClick="()=>ShowPopupStudent(null)" Icon="plus">Add</Button>
+
+<Form Model="@studentSearch" OnFinish="OnValidSubmit" OnFinishFailed="OnInvalidSubmit">
+    <Row Gutter="16">
+        <GridCol Span="6">
+            <FormItem Label="Student Name">
+                <Input @bind-Value="@studentSearch.Name" AllowClear />
+            </FormItem>
+        </GridCol>
+        <GridCol Span="6">
+            <FormItem Label="Address">
+                <Input @bind-Value="@studentSearch.Address" AllowClear />
+            </FormItem>
+        </GridCol>
+        
+        <GridCol Span="6">
+            <FormItem Label="Class">
+                <Select Mode="default"
+                        DataSource="ListClasss"
+                        @bind-Value="@studentSearch.ClassId"
+                        LabelName="@nameof(Class.Name)"
+                        ValueName="@nameof(Class.Id)" AllowClear>
+                </Select>
+            </FormItem>
+        </GridCol>
+        <GridCol Span="6">
+            <Button HtmlType="submit">
+                Search
+            </Button>
+        </GridCol>
+    </Row>
+
+</Form>
+
+<Table TItem="StudentViewDTO" DataSource="@listStudentViewDTO" Total="totalCount"
+       @bind-PageIndex="pageNumber" @bind-PageSize="pageSize" OnChange="OnPaging">
+    <Column @bind-Field="context.STT"></Column> 
+    <Column @bind-Field="context.Name"></Column>
+    <Column @bind-Field="context.Dob" Format="dd/MM/yyyy"></Column>
+    <Column @bind-Field="context.Address"></Column>
+    @* <Column @bind-Field="context.ClassId"></Column> *@
+    <Column @bind-Field="context.ClassName"></Column>
+
+
+    <ActionColumn Title="Action">
+        <Space Size=@("middle")>
+            <SpaceItem>
+                <Button OnClick="()=>ShowPopupStudent(context)"><Icon Type="edit"></Icon></Button>
+            </SpaceItem>
+            <SpaceItem>
+                <Popconfirm Title="Are you sure to delete this class?"
+                            OnConfirm="() => DeleteStudent(context)"
+                            OkText="Yes"
+                            CancelText="No">
+                    <Button><Icon Type="delete" Theme="outline" /></Button>
+                </Popconfirm>
+            </SpaceItem>
+        </Space>
+    </ActionColumn>
+</Table>
+
+<Modal Visible="@isPopupVisible" Title="Add/Update Student" Closable="false">
+    <Form Model="@StudentDTO"
+          LabelColSpan="5" WrapperColSpan="10"
+          OnFinish="OnSubmitSuccess" OnFinishFailed="OnSubmitFail">
+        <FormItem Label=" Student Name">
+            <Input @bind-Value="@StudentDTO.Name" />
+        </FormItem>
+        <FormItem Label="Dob">
+            <DatePicker TValue="DateTime" Style="width: 100%" @bind-Value="@StudentDTO.Dob" />
+        </FormItem>
+        <FormItem Label="Address">
+            <Input @bind-Value="@StudentDTO.Address" />
+        </FormItem>
+        
+        <FormItem Label="Class">
+            <Select Mode="default"
+                    DataSource="ListClasss"
+                    @bind-Value="@StudentDTO.ClassId"
+                    LabelName="@nameof(Class.Name)"
+                    ValueName="@nameof(Class.Id)" AllowClear>
+            </Select>
+        </FormItem>
+        <Button HtmlType="submit">Save</Button>
+        <Button Type="default" OnClick="_=>close()">Cancel</Button>
+    </Form>
+</Modal>
+<style>
+    .ant-modal-footer {
+        display: none !important;
+    }
+</style>
