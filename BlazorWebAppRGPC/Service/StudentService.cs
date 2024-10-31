@@ -53,10 +53,10 @@ namespace BlazorWebAppRGPC.Service
 
             foreach (StudentViewDTO dto in studentUpdateclass)
             {
-                // Kiểm tra ngày sinh
+                
                 if (DateTime.Now.Month > 6)
                 {
-                    // Chuyển lên lớp mới nếu sinh từ ngày 1/6
+                    
                     dto.ClassId++;
                 }
 

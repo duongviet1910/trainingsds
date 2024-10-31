@@ -1,8 +1,10 @@
 ﻿@page "/listStudent"
 
 <h3>ListStudent</h3>
-<Button OnClick="()=>ShowPopupStudent(null)" Icon="plus">Add</Button>
-<Button OnClick="UpdateStudentClassesAsync" Icon="plus">UpdateStudentClass</Button>
+<div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+    <Button OnClick="()=>ShowPopupStudent(null)" Icon="plus">Add</Button>
+    <Button OnClick="UpdateStudentClassesAsync" Icon="up">UpdateStudentClass</Button>
+</div>
 
 
 <Form Model="@studentSearch" OnFinish="OnValidSubmit" OnFinishFailed="OnInvalidSubmit">
@@ -17,7 +19,7 @@
                 <Input @bind-Value="@studentSearch.Address" AllowClear />
             </FormItem>
         </GridCol>
-        
+
         <GridCol Span="6">
             <FormItem Label="Class">
                 <Select Mode="default"
@@ -39,7 +41,7 @@
 
 <Table TItem="StudentViewDTO" DataSource="@listStudentViewDTO" Total="totalCount"
        @bind-PageIndex="pageNumber" @bind-PageSize="pageSize" OnChange="OnPaging">
-    <Column @bind-Field="context.STT"></Column> 
+    <Column @bind-Field="context.STT"></Column>
     <Column @bind-Field="context.Name"></Column>
     <Column @bind-Field="context.Dob" Format="dd/MM/yyyy"></Column>
     <Column @bind-Field="context.Address"></Column>
@@ -77,7 +79,7 @@
         <FormItem Label="Address">
             <Input @bind-Value="@StudentDTO.Address" />
         </FormItem>
-        
+
         <FormItem Label="Class">
             <Select Mode="default"
                     DataSource="ListClasss"

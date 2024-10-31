@@ -25,6 +25,7 @@ namespace BlazorWebAppRGPC.Pages
             await loadData();
         }
 
+
         private async Task loadData()
         {
             var classDatas = ClassService.GetAllClasss();
