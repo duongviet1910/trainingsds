@@ -17,6 +17,7 @@ namespace SimpleGRPC.Repository.IRepository
         public BooleanGrpc UpdateStudent(Student studentUpdate);
 
         public BooleanGrpc DeleteStudent(Student student);
+        public BooleanGrpc UpdateStudentClass(List<Student> student);
 
         public List<Student> SortData();
 

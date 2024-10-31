@@ -13,12 +13,8 @@ namespace SimpleGRPC.Model.Mapping
         public ClassMapping() {
             Table("Class");
 
-            //Id(x => x.Id, map => map.Column("class_id"));
+            Id(x => x.Id, map => map.Column("class_id"));
 
-            Id(x => x.Id, map => {
-                map.Column("class_id");
-                map.Generator(NHibernate.Mapping.ByCode.Generators.Identity); // Sử dụng Identity để auto-increment
-            });
 
             Property(x => x.Name, map => map.Column("class_name"));
 

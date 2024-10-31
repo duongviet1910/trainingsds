@@ -2,6 +2,8 @@
 
 <h3>ListStudent</h3>
 <Button OnClick="()=>ShowPopupStudent(null)" Icon="plus">Add</Button>
+<Button OnClick="UpdateStudentClassesAsync" Icon="plus">UpdateStudentClass</Button>
+
 
 <Form Model="@studentSearch" OnFinish="OnValidSubmit" OnFinishFailed="OnInvalidSubmit">
     <Row Gutter="16">

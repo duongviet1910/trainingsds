@@ -61,6 +61,8 @@ public interface StudentProto
     BooleanGrpc DeleteStudent(StudentGrpc request, CallContext context = default);
     [OperationContract]
     DataPageStudent GetDataPage(PageStudent pageStudent, CallContext context = default);
+    [OperationContract]
+    BooleanGrpc UpdateStudentClass(List<StudentGrpc> request, CallContext context = default);
 
 
 }

@@ -94,6 +94,18 @@ namespace BlazorWebAppRGPC.Pages
                 StudentDTO.Dob = DateTime.Today;
             }
         }
+
+        async Task UpdateStudentClassesAsync()
+        {
+            BooleanGrpc check;
+            check = StudentService.UpdateStudentClass(listStudentViewDTO);
+            if(check.result)
+            {
+                await loadData();
+            }
+        }
+
+
         private void OnSubmitSuccess()
         {
             BooleanGrpc check;

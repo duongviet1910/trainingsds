@@ -76,12 +76,43 @@ namespace SimpleGRPC.Repository
             }
         }
 
+
+        public BooleanGrpc UpdateStudentClass(List<Student> studentUpdateclass)
+        {
+            using (var session = _session.OpenStatelessSession())
+            {
+                using (var transaction = session.BeginTransaction(IsolationLevel.Serializable))
+                {
+                    BooleanGrpc r = new BooleanGrpc();
+                    try
+                    {
+                        foreach (var student in studentUpdateclass)
+                        {
+                            session.Update(student);
+                        }
+                        transaction.Commit();
+                        r.result = true;
+                        r.mess = "Successfull";
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Console.WriteLine($"An error occurred: {ex.Message}");
+                        r.result = false;
+                        r.mess = ex.Message;
+                        transaction.Rollback();
+                    }
+                    return r;
+                }
+            }
+        }
+
         public List<Student> GetAllStudents()
         {
             using (var session = _session.OpenStatelessSession())
             {
                 return session.Query<Student>()
-                    .Fetch(s => s.ClassStudent)
+                    //.Fetch(s => s.ClassStudent)
                     .ToList();
             }
         }

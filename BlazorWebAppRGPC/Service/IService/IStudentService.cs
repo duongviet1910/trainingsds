@@ -13,6 +13,7 @@ namespace BlazorWebAppRGPC.Service.IService
         public BooleanGrpc UpdateStudent(StudentDTO studentUpdate);
 
         public BooleanGrpc DeleteStudent(StudentViewDTO studentDelete);
+        public BooleanGrpc UpdateStudentClass(List<StudentViewDTO> studentClass);
 
         public List<Student> SortData();
 

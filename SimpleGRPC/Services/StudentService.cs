@@ -56,7 +56,21 @@ namespace SimpleGRPC.Services
             return studentMapper.StudentToStudentGrpc(t);
         }
 
-        
+        public BooleanGrpc UpdateStudentClass(List<StudentGrpc> request, CallContext context = default)
+        {
+            List<Student> students = new List<Student>();
+            foreach (StudentGrpc grpcs in request)
+            {
+                var student = studentMapper.StudenGrpcToStudent(grpcs);
+                students.Add(student);
+            }
+
+
+           // List<Student> studentUpdateclass = studentMapper.StudenGrpcToStudent(students);
+            return studentRepository.UpdateStudentClass(students);
+        }
+
+
 
         public DataPageStudent GetDataPage(PageStudent pageStudent, CallContext context = default)
         {

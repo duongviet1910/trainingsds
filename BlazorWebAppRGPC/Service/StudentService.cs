@@ -43,6 +43,31 @@ namespace BlazorWebAppRGPC.Service
             return client.DeleteStudent(c);
         }
 
+
+        public BooleanGrpc UpdateStudentClass(List<StudentViewDTO> studentUpdateclass)
+        {
+            var client = getService();
+            List<StudentGrpc> studentGrpcs = new List<StudentGrpc>();
+            DateTime today = DateTime.Today;
+            DateTime juneFirst = new DateTime(today.Year, 6, 1);
+
+            foreach (StudentViewDTO dto in studentUpdateclass)
+            {
+                // Kiểm tra ngày sinh
+                if (DateTime.Now.Month > 6)
+                {
+                    // Chuyển lên lớp mới nếu sinh từ ngày 1/6
+                    dto.ClassId++;
+                }
+
+                // Chuyển đổi đối tượng StudentDTO sang StudentGrpc
+                var grpc = studentMapper.StudentViewDTOToStudentGrpc(dto);
+                studentGrpcs.Add(grpc);
+            }
+
+            return client.UpdateStudentClass(studentGrpcs);
+        }
+
         public List<StudentViewDTO> GetAllStudent()
         {
             List<StudentViewDTO> listStudents = new List<StudentViewDTO>();
