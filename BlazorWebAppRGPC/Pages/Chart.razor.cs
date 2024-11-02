@@ -39,8 +39,9 @@ namespace BlazorWebAppRGPC.Pages
                     .Where(student => student.ClassId == classData.Id).Count(),
                 };
                 charts.Add(datastudent);
+                
             }
-            
+           
         }
 
 

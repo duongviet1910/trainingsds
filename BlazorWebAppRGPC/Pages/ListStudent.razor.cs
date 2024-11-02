@@ -21,6 +21,8 @@ namespace BlazorWebAppRGPC.Pages
         [Inject] IMessageService Message { get; set; }
 
         private List<StudentViewDTO> listStudentViewDTO = new List<StudentViewDTO>();
+        private List<StudentViewDTO> listStudentUpdate = new List<StudentViewDTO>();
+
         private List<Class> listClass = new List<Class>();
         public Student student = new Student();
         public StudentDTO StudentDTO = new StudentDTO();
@@ -98,13 +100,27 @@ namespace BlazorWebAppRGPC.Pages
         async Task UpdateStudentClassesAsync()
         {
             BooleanGrpc check;
-            check = StudentService.UpdateStudentClass(listStudentViewDTO);
+            listStudentUpdate = StudentService.GetAllStudent();
+            check = StudentService.UpdateStudentClass(listStudentUpdate);
             if(check.result)
             {
+                await _notice.Open(new NotificationConfig()
+                {
+                    Message = check.mess,
+                    NotificationType = NotificationType.Success
+                });
                 await loadData();
             }
-        }
+            else
+            {
+                await _notice.Open(new NotificationConfig()
+                {
+                    Message = check.mess,
+                    NotificationType = NotificationType.Error
+                });
+            }
 
+        }
 
         private void OnSubmitSuccess()
         {

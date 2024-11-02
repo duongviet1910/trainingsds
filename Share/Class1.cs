@@ -17,6 +17,7 @@ public class BooleanGrpc
     public Boolean result { get; set; }
     [DataMember(Order = 2)]
     public String mess { get; set; }
+    
 }
 
 [DataContract]

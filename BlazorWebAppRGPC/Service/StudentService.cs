@@ -4,9 +4,11 @@ using BlazorWebAppRGPC.Model.Mapper;
 using BlazorWebAppRGPC.Pages;
 using BlazorWebAppRGPC.Service.IService;
 using Grpc.Net.Client;
+using NHibernate.Cfg.XmlHbmBinding;
 using OneOf.Types;
 using ProtoBuf.Grpc.Client;
 using Share;
+
 
 namespace BlazorWebAppRGPC.Service
 {
@@ -49,23 +51,34 @@ namespace BlazorWebAppRGPC.Service
             var client = getService();
             List<StudentGrpc> studentGrpcs = new List<StudentGrpc>();
             DateTime today = DateTime.Today;
-            DateTime juneFirst = new DateTime(today.Year, 6, 1);
+            BooleanGrpc response = new BooleanGrpc();
 
-            foreach (StudentViewDTO dto in studentUpdateclass)
+
+            if (today.Month > 6)
             {
-                
-                if (DateTime.Now.Month > 6)
+                foreach (StudentViewDTO dto in studentUpdateclass)
                 {
-                    
-                    dto.ClassId++;
-                }
+                    if(dto.ClassId < 13)
+                    {
+                        dto.ClassId++;
 
-                // Chuyển đổi đối tượng StudentDTO sang StudentGrpc
-                var grpc = studentMapper.StudentViewDTOToStudentGrpc(dto);
+                    }
+
+
+                    // Chuyển đổi đối tượng StudentDTO sang StudentGrpc
+                    var grpc = studentMapper.StudentViewDTOToStudentGrpc(dto);
                 studentGrpcs.Add(grpc);
+                }
+                var upd = client.UpdateStudentClass(studentGrpcs);
+                response.result = upd.result;
+                response.mess = "Hoc sinh da duoc len lop";
             }
-
-            return client.UpdateStudentClass(studentGrpcs);
+            else
+            {
+                 response.result = false;
+                response.mess = "Chua den ngay tong ket, hoc sinh chua duoc len lop";
+            }
+            return response;
         }
 
         public List<StudentViewDTO> GetAllStudent()
